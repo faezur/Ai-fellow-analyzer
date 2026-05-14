@@ -11,7 +11,7 @@ Instead of only checking "did they complete tasks?", it evaluates how well a per
 
 ---
 ### Home Page
-![UI](./screenshot/111111.jpg)
+![UI](./ScreenShots/111111.jpg)
 ##  The Problem
 
 Most performance reviews only measure:

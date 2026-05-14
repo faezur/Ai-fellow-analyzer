@@ -1,141 +1,143 @@
 # AI Fellow Performance Analyzer
 
-Supervisor transcript paste karo → Structured AI performance analysis pao.
+##  What it does
+
+This tool analyzes a supervisor's feedback transcript and provides a structured performance evaluation.
+
+Instead of only checking "did they complete tasks?", it evaluates how well a person:
+- thinks independently  
+- takes initiative  
+- builds systems  
 
 ---
 
-## Architecture
+##  The Problem
 
-```
-Frontend (React + Vite)     Backend (Node + Express)     AI (Ollama local)
-     :5173          →→→          :3001            →→→       :11434
-  Transcript input          /analyze endpoint          llama3.2 model
-  Result display            masterPrompt inject        JSON response
-```
+Most performance reviews only measure:
+
+- Tasks completed 
+- Instructions followed   
+
+But they miss critical factors like:
+
+- Can the person solve problems independently?  
+- Do they create reusable processes (SOPs, trackers)?  
+- Do they build systems that save time for others?  
 
 ---
 
-## Setup Instructions
+##  How it Works
 
-### Step 1 — Ollama install karo
+The system evaluates performance using two layers:
 
-```bash
-# Mac/Linux
-curl -fsSL https://ollama.ai/install.sh | sh
+###  Level 1: Execution
+- Completes assigned work  
+- Follows instructions  
+- Communicates with team  
+- Reliable and consistent  
 
-# Windows
-# https://ollama.ai/download se installer download karo
-```
+###  Level 2: Systems Thinking
+- Solves problems independently  
+- Creates SOPs, dashboards, workflows  
+- Builds reusable systems  
 
-### Step 2 — Model pull karo
+Score above 7 is only given if Level 2 behavior is clearly present.
 
-```bash
-ollama pull llama3.2
-```
+---
 
-### Step 3 — Ollama test karo
+##  Key Features
 
-```bash
-ollama run llama3.2
-# "Hello" type karo — agar response aaya toh sab theek hai
-# Ctrl+D se bahar aao
-```
+-  Performance score (1–10) with reasoning  
+-  Evidence extracted from transcript  
+-  Gap detection (what is missing)  
+-  Smart follow-up questions  
+-  No hallucination — only uses actual transcript data  
+-  Strict scoring and validation logic  
 
-### Step 4 — Backend setup
+---
 
-```bash
-cd server
+##  AI Logic
+
+This system does not blindly trust AI output.
+
+### Prompt Layer:
+- Differentiates execution vs systems thinking  
+- Enforces strict scoring rules  
+- Prevents inflated scores  
+
+### Parser Layer:
+- Cleans and validates AI response  
+- Fixes malformed JSON  
+- Ensures:
+  - Minimum evidence  
+  - Real gap detection  
+  - Consistent scoring  
+ This makes the system reliable and structured.
+
+---
+
+##  Tech Stack
+
+**Frontend:**  
+- React + Vite  
+- Clean UI for input and results  
+
+**Backend:**  
+- Node.js + Express  
+- AI analysis + validation  
+
+---
+
+##  How to Use
+
+1. Paste a supervisor transcript  
+2. Click **Analyze**  
+3. Get:
+   - Score  
+   - Evidence  
+   - Gaps  
+   - Follow-up questions  
+
+---
+
+## Example Output
+
+**Score:** 5/10 (Solid execution, needs systems thinking)
+
+**Evidence:**
+- "Completed all assigned tasks on time"
+- "Good communication with team"
+
+**Gaps:**
+- No independent problem solving mentioned
+- No systems/process creation
+
+**Follow-up Questions:**
+- "Did they create reusable processes?"
+- "Any examples of independent initiatives?"
+
+---
+
+##  Limitations
+
+- Depends on quality of input transcript  
+- No real KPI integration  
+- AI response time may vary  
+
+---
+
+##  Quick Start
+
+### Backend
 npm install
 npm run dev
-# Server start hoga: http://localhost:3001
-```
-
-### Step 5 — Frontend setup (nayi terminal mein)
-
-```bash
-cd client
+### Frontend
 npm install
 npm run dev
-# Frontend start hoga: http://localhost:5173
-```
 
-### Step 6 — Browser mein kholo
+💣 Key Insight
+This is not just an AI response generator —
+it is a rule-driven evaluation system.
 
-```
-http://localhost:5173
-```
-
----
-
-## Project Structure
-
-```
-ai-fellow-analyzer/
-├── client/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── TranscriptInput.jsx     ← Left panel (textarea + button)
-│   │   │   ├── ResultPanel.jsx         ← Right panel (orchestrator)
-│   │   │   ├── ScoreCard.jsx           ← Score display
-│   │   │   ├── EvidenceCards.jsx       ← Evidence with quotes
-│   │   │   ├── KpiMapping.jsx          ← KPI table
-│   │   │   ├── GapAnalysis.jsx         ← Gaps list
-│   │   │   └── FollowUpQuestions.jsx   ← AI-generated questions
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-│
-├── server/
-│   ├── prompts/
-│   │   └── masterPrompt.js    ← THE HEART — AI instructions
-│   ├── utils/
-│   │   └── parser.js          ← JSON cleaner for LLM output
-│   ├── routes/
-│   │   └── analyze.js         ← POST /analyze endpoint
-│   ├── server.js
-│   └── package.json
-│
-└── README.md
-```
-
----
-
-## Why llama3.2?
-
-- Locally runs — no API cost, no internet needed
-- Fast enough for structured JSON output
-- Good instruction following for prompt engineering
-- Privacy: transcript data kabhi bahar nahi jaata
-
----
-
-## Prompt Engineering Approach
-
-`server/prompts/masterPrompt.js` mein:
-
-1. **Layer 1 vs Layer 2 framework** — Surface behaviors vs deep judgment behaviors
-2. **Strict scoring rules** — Guards against inflation (no undeserved 8+)
-3. **KPI definitions** — 7 dimensions clearly defined
-4. **JSON-only instruction** — LLM ko strict format force kiya
-5. **Bias awareness** — Supervisor over/under-praise handle karna
-
----
-
-## Challenges
-
-- LLMs kabhi kabhi clean JSON nahi dete → `parser.js` ne solve kiya
-- Ollama slow hota hai locally → 120s timeout set kiya
-- Scoring calibration → Prompt mein explicit rules diye
-
----
-
-## Future Improvements
-
-- Multiple transcript comparison
-- Historical trend tracking per fellow
-- Export to PDF report
-- Fine-tuned model on real performance data
-- Side-by-side supervisor vs peer review
+👤 Author
+Faiz Ansari

@@ -13,7 +13,7 @@ Instead of only checking "did they complete tasks?", it evaluates how well a per
 ### Home Page
 ![Analyze](./ScreenShots/111111.jpg)
 ![After Result](./ScreenShots/2222.jpg)
-![After Result2](./ScreenShots/3333.jpg)
+![After Result2](./ScreenShots/3333.png)
 ##  The Problem
 
 Most performance reviews only measure:
